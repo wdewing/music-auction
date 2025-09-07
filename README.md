@@ -53,8 +53,24 @@ Notes:
 
 ## Next steps
 
-- Add auth (e.g., Clerk/Auth.js) suitable for edge.
-- Model auction items, bids, and users; then wire CRUD routes.
-- Add UI for listing items and placing bids.
-- Set up CI and Cloudflare Pages deployment.
+- Run migrations (development):
+
+```
+curl -X POST http://localhost:3000/api/migrate -H "x-migrate-token: $MIGRATION_TOKEN"
+```
+
+- Auth endpoints (Edge):
+  - POST /api/auth/signup { email, password }
+  - POST /api/auth/login { email, password }
+  - POST /api/auth/logout
+
+- Items endpoints:
+  - GET /api/items?search=...&page=1&pageSize=20
+  - POST /api/items { title, short_description, long_description, image_url, sale_type, reserve_price?, buy_now_price? }
+  - GET /api/items/[id]
+
+- Notes:
+  - Auctions are automatically set to end in 7 days; reserve price optional.
+  - Fixed-price items require buy_now_price.
+  - `MIGRATION_TOKEN` can protect the migration route in production.
 
